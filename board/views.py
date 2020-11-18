@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from board.models import Member, Post
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import Http404
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 

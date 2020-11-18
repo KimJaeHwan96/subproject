@@ -1,2 +1,5 @@
-*/__pycache__/
-
+*/pycache__/
+.python-version
+.git
+.idea
+djangoProject

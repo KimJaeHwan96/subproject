@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from board.models import Member, Post, GENDERS
+from board.models import Member, Post
 
 
 class MemberSerializer(serializers.ModelSerializer):
