@@ -3,17 +3,11 @@ from django.urls import path, include
 from board import views
 from rest_framework import viewsets
 from rest_framework import routers
-from .views import MemberViewSet
+from .views import MemberViewSet, PostViewSet
 
-#member_list = MemberViewSet.as_view({'get' : 'list'})
-#
 router = routers.SimpleRouter()
 router.register(r'member', MemberViewSet, basename='member')
-
+router.register(r'', PostViewSet, basename='')
 urlpatterns = [
-    path('', views.PostList.as_view()),
-    path('<int:pk>/', views.PostDetail.as_view()),
-    #('member/', member_list, name='member-list'),
-    #path('member/<int:pk>/', member_detail, name='member-detail')
+    path('', include(router.urls)),
 ]
-urlpatterns += router.urls

@@ -6,6 +6,7 @@ GENDERS = (
         ('W', '여성(Woman)'),
     )
 
+
 class Member(AbstractUser):
     name = models.CharField(max_length=10,)
     gender = models.CharField(verbose_name='성별', max_length=1, choices=GENDERS)
@@ -19,6 +20,7 @@ class Member(AbstractUser):
 
     def __str__(self):
         return self.name
+
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
