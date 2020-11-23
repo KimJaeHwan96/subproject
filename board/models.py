@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 GENDERS = (
         ('M', '남성(Man)'),
@@ -10,7 +10,7 @@ GENDERS = (
 class Member(AbstractUser):
     name = models.CharField(max_length=10,)
     gender = models.CharField(verbose_name='성별', max_length=1, choices=GENDERS)
-    birthday = models.DateField(verbose_name='생년월일')
+    birthday = models.DateField(verbose_name='생년월일', null=True)
     tel = models.CharField(verbose_name="연락처", max_length=20,)
     created_dt = models.DateTimeField(verbose_name="가입 일자", auto_now_add=True)
     updated_dt = models.DateTimeField(verbose_name="갱신 일자", auto_now=True)

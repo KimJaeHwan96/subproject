@@ -1,18 +1,24 @@
 from board.serializers import MemberSerializer, PostSerializer
-from rest_framework.views import APIView
 from board.models import Member, Post
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework import permissions
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class MemberViewSet(viewsets.ViewSet):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
     def list(self, request):
-        queryset =  Member.objects.all()
+        queryset = Member.objects.all()
         serializer = MemberSerializer(queryset, many=True)
         return Response(serializer.data)
 
