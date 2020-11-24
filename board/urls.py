@@ -8,6 +8,4 @@ router.register(r'member', MemberViewSet, basename='member')
 router.register(r'', PostViewSet, basename='')
 urlpatterns = [
     path('', include(router.urls)),
-    #path('login/', auth_views.as_view(), name='login'),
-    #path('logout/', auth_views.auth_logout.as_view())
 ]
