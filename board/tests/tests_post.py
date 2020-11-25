@@ -1,4 +1,4 @@
-from test_plus.test import TestCase, APITestCase
+from test_plus.test import APITestCase
 from rest_framework import status
 from board.models import Post, Member
 
@@ -43,7 +43,7 @@ class APITest(APITestCase):
     def test_login_delete_posts(self):
         with self.login(username="Jhon", password="password"):
             response = self.client.delete('/board/1/')
-            self.response_204((response))
+            self.response_204(response)
 
 
     def test_logout_get_posts_list(self):
@@ -77,5 +77,4 @@ class APITest(APITestCase):
         self.response_403((response))
 
     def test_str(self):
-        response = self.client.get('/board/1/')
-        assert response.data['title'] == str(self.post1)
+        assert self.post1.title == str(self.post1)

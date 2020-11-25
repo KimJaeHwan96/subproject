@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
 
 GENDERS = (
         ('M', '남성(Man)'),
@@ -35,7 +35,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-"""
+
 class Comment(models.Model):
     author = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member')
     comment = models.TextField()
@@ -44,6 +44,3 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-created_dt']
 
-    def __str__(self):
-        return self.author
-"""

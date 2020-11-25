@@ -1,6 +1,6 @@
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
-from board.models import Member, Post
+from board.models import Member, Post, Comment
 
 
 class MemberSerializer(serializers.ModelSerializer):
@@ -14,9 +14,8 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'description', 'writer', 'created_dt', 'modify_dt']
 
-"""
+
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'comment']
-"""
+        fields = ['id', 'author', 'comment', 'created_dt']

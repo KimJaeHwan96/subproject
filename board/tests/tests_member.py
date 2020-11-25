@@ -1,10 +1,10 @@
-from test_plus.test import TestCase, APITestCase
+from test_plus.test import APITestCase
 from rest_framework import status
 from board.models import Post, Member
 
 
 
-class MemberLogInAPITest(APITestCase):
+class MemberAPITest(APITestCase):
     def setUp(self):
         self.user1 = self.make_user(username="Jhon", password="password")
         self.member1 = Member.objects.create(username="kim", name="kim", gender='M', tel="123456")
@@ -15,8 +15,6 @@ class MemberLogInAPITest(APITestCase):
     def test_login(self):
         response = self.client.post(self.reverse('rest_framework:login'), data={ "username": "test1", "password": "123456!@#"})
         assert response.status_code == status.HTTP_200_OK
-        #assert 'user' in response.data
-        #assert response.data['user']['username'] == 'test1'
 
     def test_login_get_members_list(self):
         with self.login(username="Jhon", password="password"):
