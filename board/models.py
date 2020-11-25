@@ -22,7 +22,6 @@ class Member(AbstractUser):
         return self.name
 
 
-
 class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
@@ -35,3 +34,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+"""
+class Comment(models.Model):
+    author = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member')
+    comment = models.TextField()
+    created_dt = models.DateTimeField(verbose_name='댓글 작성 시간', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_dt']
+
+    def __str__(self):
+        return self.author
+"""
