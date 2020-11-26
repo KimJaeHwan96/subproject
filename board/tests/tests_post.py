@@ -10,7 +10,7 @@ class APITest(APITestCase):
         self.member1 = Member.objects.create(username="kim", gender='M', tel="123456")
         self.member2 = Member.objects.create(username="jang", gender='W', tel="456789")
         self.post1 = Post.objects.create(title="DRF", description="how to learn DRF", writer=self.member1)
-        self.post2 = Post.objects.create(title="Spring", description="how to learn Spring", writer=self.member2)
+        self.post2 = Post.objects.create(title="DSpring", description="how to learn Spring", writer=self.member2)
 
     def test_login_get_posts_list(self):
         response = self.client.get(self.reverse(name='post-list'))
@@ -81,5 +81,9 @@ class APITest(APITestCase):
 
     def test_search_post(self):
         response = self.client.get('/board/post/?search=D')
+        posts = Post.objects.filter(title__startswith='D').order_by('id')
+        response_ids = sorted([data['id'] for data in response.data['results']])
+        posts_ids = list(posts.values_list('id', flat=True))
+        assert response_ids == posts_ids
         self.response_200(response)
 

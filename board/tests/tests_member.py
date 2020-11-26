@@ -75,8 +75,17 @@ class MemberAPITest(APITestCase):
             assert response.data['name'] == str(self.member1)
 
     def test_filter_member(self):
-        response = self.client.get('/board/post/?gender=M')
-        self.response_200(response)
+        with self.login(username="Jhon", password="password"):
+            response = self.client.get('/board/member/?gender=M')
+            members = Member.objects.filter(gender='M').order_by('id')
+            response_ids = sorted([data['id'] for data in response.data['results']])
+            member_ids = list(members.values_list('id', flat=True))
+            assert response_ids == member_ids
+            self.response_200(response)
 
-        response = self.client.get('/board/post/?tel=123456')
-        self.response_200(response)
+            response = self.client.get('/board/member/?tel=123456')
+            members = Member.objects.filter(tel='123456').order_by('id')
+            response_tels = sorted([data['id'] for data in response.data['results']])
+            member_tels = list(members.values_list('id', flat=True))
+            assert response_tels == member_tels
+            self.response_200(response)

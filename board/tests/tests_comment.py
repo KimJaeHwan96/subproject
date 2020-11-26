@@ -9,6 +9,8 @@ class CommentAPITest(APITestCase):
         self.member1 = Member.objects.create(username="kim", name="kim", gender='M', tel="123456")
         self.post1 = Post.objects.create(title="DRF", description="how to learn DRF", writer=self.member1)
         self.comment1 = Comment.objects.create(author=self.member1, post=self.post1, comment="Hi my name is KJH")
+        self.comment2 = Comment.objects.create(author=self.member1, post=self.post1, comment="Hi my name is PSW")
+        self.comment3 = Comment.objects.create(author=self.member1, post=self.post1, comment="Hi my name is LSW")
 
     def test_get_comment(self):
         response = self.client.get('/board/comment/')
@@ -62,5 +64,9 @@ class CommentAPITest(APITestCase):
         self.response_403(response)
 
     def test_ordering_comment(self):
-        response = self.client.get('/board/post/?ordering=-1')
+        response = self.client.get('/board/comment/?ordering=-1')
+        comments = Comment.objects.all().order_by('-id')
+        response_ids = [data['id'] for data in response.data['results']]
+        comments_ids = list(comments.values_list('id', flat=True))
+        assert response_ids == comments_ids
         self.response_200(response)
