@@ -25,7 +25,7 @@ class Member(AbstractUser):
 class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    writer = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='posts')
+    writer = models.ForeignKey("board.Member", on_delete=models.CASCADE, related_name='posts')
     created_dt = models.DateTimeField(verbose_name='작성 시간', auto_now_add=True)
     modify_dt = models.DateTimeField(verbose_name='변경 시간', auto_now=True)
 
@@ -37,7 +37,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member')
+    author = models.ForeignKey("board.Member", on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey("board.Post", on_delete=models.CASCADE, related_name='comments', null=True)
     comment = models.TextField()
     created_dt = models.DateTimeField(verbose_name='댓글 작성 시간', auto_now_add=True)
 

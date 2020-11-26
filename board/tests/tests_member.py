@@ -3,12 +3,11 @@ from rest_framework import status
 from board.models import Post, Member
 
 
-
 class MemberAPITest(APITestCase):
     def setUp(self):
         self.user1 = self.make_user(username="Jhon", password="password")
         self.member1 = Member.objects.create(username="kim", name="kim", gender='M', tel="123456")
-        self.member2 = Member.objects.create(username="jang", gender='W', tel="456789")
+        self.member2 = Member.objects.create(username="jang", name='jang', gender='W', tel="456789")
         self.post1 = Post.objects.create(title="DRF", description="how to learn DRF", writer=self.member1)
         self.post2 = Post.objects.create(title="Spring", description="how to learn Spring", writer=self.member2)
 
@@ -25,6 +24,7 @@ class MemberAPITest(APITestCase):
         with self.login(username="Jhon", password="password"):
             data = {
                 "username": "Jae",
+                "name": "Jae",
                 "gender": "M",
                 "tel": "0701577",
             }
@@ -72,4 +72,11 @@ class MemberAPITest(APITestCase):
     def test_str(self):
         with self.login(username="Jhon", password="password"):
             response = self.client.get('/board/member/2/')
-            assert response.data['username'] == str(self.member1)
+            assert response.data['name'] == str(self.member1)
+
+    def test_filter_member(self):
+        response = self.client.get('/board/post/?gender=M')
+        self.response_200(response)
+
+        response = self.client.get('/board/post/?tel=123456')
+        self.response_200(response)

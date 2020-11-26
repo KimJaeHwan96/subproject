@@ -6,7 +6,7 @@ from board.models import Member, Post, Comment
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ['id', 'username', 'gender', 'birthday', 'tel', 'created_dt', 'updated_dt']
+        fields = ['id', 'name', 'gender', 'birthday', 'tel', 'created_dt', 'updated_dt']
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -18,4 +18,5 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'comment', 'created_dt']
+        fields = ['id', 'author', 'post', 'comment', 'created_dt']
+
