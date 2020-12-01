@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
 
 GENDERS = (
         ('M', '남성(Man)'),
@@ -22,11 +22,10 @@ class Member(AbstractUser):
         return self.name
 
 
-
 class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    writer = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='posts')
+    writer = models.ForeignKey("board.Member", on_delete=models.CASCADE, related_name='posts')
     created_dt = models.DateTimeField(verbose_name='작성 시간', auto_now_add=True)
     modify_dt = models.DateTimeField(verbose_name='변경 시간', auto_now=True)
 
@@ -35,3 +34,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    author = models.ForeignKey("board.Member", on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey("board.Post", on_delete=models.CASCADE, related_name='comments', null=True)
+    comment = models.TextField()
+    created_dt = models.DateTimeField(verbose_name='댓글 작성 시간', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_dt']
+
